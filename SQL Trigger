@@ -1,0 +1,17 @@
+CREATE OR REPLACE FUNCTION Characters()
+  RETURNS trigger AS
+$$
+BEGIN
+         INSERT INTO test_table(col1,col2,col3)
+         VALUES(NEW.col1,NEW.col2,current_date);
+ 
+    RETURN NEW;
+END;
+$$
+LANGUAGE 'plpgsql';
+
+CREATE TRIGGER test_trigger
+  AFTER INSERT
+  ON "Characters" 
+  FOR EACH ROW
+  EXECUTE PROCEDURE Characters();
